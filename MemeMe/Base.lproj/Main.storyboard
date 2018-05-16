@@ -22,13 +22,13 @@
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YOA-5F-Kka" userLabel="Top Text Field" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
-                                <rect key="frame" x="156" y="94" width="8" height="17"/>
+                                <rect key="frame" x="0.0" y="94" width="320" height="17"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ze9-lC-ZDX" userLabel="Bottom Text Field" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
-                                <rect key="frame" x="156" y="477" width="8" height="17"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ze9-lC-ZDX" userLabel="Bottom Text Field" customClass="MemeTextField" customModule="MemeMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="477" width="320" height="17"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
@@ -58,19 +58,18 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="LR2-KZ-1eB" firstAttribute="top" secondItem="LQ2-3c-P1a" secondAttribute="bottom" id="2F5-6l-N06"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ze9-lC-ZDX" secondAttribute="trailing" constant="16" id="2ml-0M-4rD"/>
                             <constraint firstItem="LR2-KZ-1eB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2wY-r3-3fp"/>
-                            <constraint firstItem="ze9-lC-ZDX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8wq-nv-5b8"/>
                             <constraint firstItem="LR2-KZ-1eB" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="CiB-2c-JTG"/>
                             <constraint firstItem="LQ2-3c-P1a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="IuD-fy-KT2"/>
-                            <constraint firstItem="ze9-lC-ZDX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="OTw-XQ-Cmc"/>
-                            <constraint firstItem="YOA-5F-Kka" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="STl-Gp-KbS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ze9-lC-ZDX" secondAttribute="trailing" id="QQ1-x8-hfW"/>
+                            <constraint firstItem="YOA-5F-Kka" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="R8V-hs-Cdw"/>
+                            <constraint firstItem="YOA-5F-Kka" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Uj1-T6-1V3"/>
                             <constraint firstItem="LQ2-3c-P1a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="VxQ-tY-E1l"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="YOA-5F-Kka" secondAttribute="trailing" constant="16" id="WLL-Wz-kxp"/>
                             <constraint firstItem="ze9-lC-ZDX" firstAttribute="bottom" secondItem="LQ2-3c-P1a" secondAttribute="bottom" constant="-30" id="Zrp-0a-nPx"/>
                             <constraint firstItem="LQ2-3c-P1a" firstAttribute="top" secondItem="YOA-5F-Kka" secondAttribute="top" constant="-30" id="cjC-Vw-VTT"/>
                             <constraint firstItem="YOA-5F-Kka" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eOg-gK-Y8g"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="LQ2-3c-P1a" secondAttribute="trailing" id="kCF-u5-GDc"/>
+                            <constraint firstItem="ze9-lC-ZDX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="m0W-2R-wat"/>
                             <constraint firstItem="LR2-KZ-1eB" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="wmS-1x-0dJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

@@ -26,7 +26,6 @@ class MemeTextField: UITextField {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        textAlignment = .center
         adjustsFontSizeToFitWidth = true
         minimumFontSize = 20
         autocapitalizationType = .allCharacters

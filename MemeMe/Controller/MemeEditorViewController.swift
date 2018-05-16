@@ -20,8 +20,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        topTextField.delegate = self
-        bottomTextField.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +69,6 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func save() {
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imageView.image!, memedImage: generateMemedImage())
-        UIImageWriteToSavedPhotosAlbum(meme.memedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -109,11 +106,16 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     func setupUI() {
         imageView.image = nil
         imageView.contentMode = .scaleAspectFit
-        topTextField.attributedPlaceholder = NSAttributedString(string: "TOP", attributes: memePlaceholderTextAttributes)
-        topTextField.text = ""
-        bottomTextField.attributedPlaceholder = NSAttributedString(string: "BOTTOM", attributes: memePlaceholderTextAttributes)
-        bottomTextField.text = ""
         shareButton.isEnabled = false
+        configure(textField: topTextField, withText: "TOP")
+        configure(textField: bottomTextField, withText: "BOTTOM")
+    }
+    
+    func configure(textField: UITextField, withText text: String) {
+        textField.delegate = self
+        textField.text = ""
+        textField.attributedPlaceholder = NSAttributedString(string: text, attributes: memePlaceholderTextAttributes)
+        textField.textAlignment = .center
     }
 }
 
