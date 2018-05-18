@@ -15,7 +15,14 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var topTextField: MemeTextField!
     @IBOutlet weak var bottomTextField: MemeTextField!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
+    @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var toolbar: UIToolbar!
+    
+    var memeToEdit: Meme?
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +31,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
         cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
     }
     
     // MARK: - Pick an image
@@ -62,6 +75,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         activityViewController.completionWithItemsHandler = { activityType, completed, returnedItems, error in
             if completed {
                 self.save()
+                self.performSegue(withIdentifier: "unwindToSentMemes", sender: self)
             }
         }
         present(activityViewController, animated: true, completion: nil)
@@ -69,6 +83,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func save() {
         let meme = Meme(topText: topTextField.text!, bottomText: bottomTextField.text!, originalImage: imageView.image!, memedImage: generateMemedImage())
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -92,29 +108,32 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func hideNavigationBarAndToolbar(_ hide: Bool) {
-        UIApplication.shared.isStatusBarHidden = hide
-        navigationController?.navigationBar.isHidden = hide
+        navigationBar.isHidden = hide
         toolbar.isHidden = hide
     }
     
     // MARK: - Discard the meme
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        setupUI()
+        dismiss(animated: true, completion: nil)
     }
     
     func setupUI() {
-        imageView.image = nil
+        if memeToEdit != nil {
+            shareButton.isEnabled = true
+        } else {
+            shareButton.isEnabled = false
+        }
+        imageView.image = memeToEdit?.originalImage
         imageView.contentMode = .scaleAspectFit
-        shareButton.isEnabled = false
-        configure(textField: topTextField, withText: "TOP")
-        configure(textField: bottomTextField, withText: "BOTTOM")
+        configure(textField: topTextField, withText: memeToEdit?.topText, andPlaceholder: "TOP")
+        configure(textField: bottomTextField, withText: memeToEdit?.bottomText, andPlaceholder: "BOTTOM")
     }
     
-    func configure(textField: UITextField, withText text: String) {
+    func configure(textField: UITextField, withText text: String?, andPlaceholder placeholder: String) {
         textField.delegate = self
-        textField.text = ""
-        textField.attributedPlaceholder = NSAttributedString(string: text, attributes: memePlaceholderTextAttributes)
+        textField.text = text
+        textField.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: memePlaceholderTextAttributes)
         textField.textAlignment = .center
     }
 }
@@ -124,15 +143,6 @@ extension MemeEditorViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (textField.text?.isEmpty)! {
             textField.placeholder? = ""
-        }
-        if textField == bottomTextField {
-            subscribeToKeyboardNotifications()
-        }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == bottomTextField {
-            unsubscribeFromKeyboardNotifications()
         }
     }
     
@@ -152,7 +162,9 @@ extension MemeEditorViewController: UITextFieldDelegate {
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
-        view.frame.origin.y -= getKeyboardHeight(notification)
+        if bottomTextField.isEditing {
+            view.frame.origin.y -= getKeyboardHeight(notification)
+        }
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
